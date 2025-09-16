@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
+    public ParticleSystem particlesEffect;
+
     void Start()
     {
         
@@ -22,6 +24,8 @@ public class Collectible : MonoBehaviour
     }
 
     private void kill() {
+        particlesEffect.Play();
+
         Object.Destroy(this.gameObject);
     }
 }
