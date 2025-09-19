@@ -5,32 +5,26 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [Header("References")]
-    public Transform ball;         // The ball to follow
-    public Transform platform;     // The tilting platform
+    public GameObject followTarget;
 
     [Header("Camera Settings")]
-    public float heightAboveBall = 10f;  // How high above the ball the camera stays
-    public float distance = 0f;          // Optional: keep some distance behind
-    public float followSpeed = 5f;       // Smoothness of movement
+    public float heightAboveBall = 10f;
+    public float distance = 0f;
+    public float followSpeed = 5f;
 
     void LateUpdate() {
-        if (ball == null || platform == null) return;
+        followTarget = GameObject.FindGameObjectWithTag("Player");
 
-        // Get platform's "up" (its normal vector)
-        Vector3 platformUp = platform.up;
+        if (followTarget == null) return;
 
-        // Desired camera position: above the ball along platform's normal
-        Vector3 targetPos = ball.position + platform.up * heightAboveBall;
+        Vector3 targetPos = followTarget.transform.position + Vector3.up * heightAboveBall;
 
-        // Smoothly move the camera
         //transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * followSpeed);
         transform.position = targetPos;
 
-        // Always look at the ball, aligning "up" with the platform normal
-        Vector3 forward = (ball.position - transform.position).normalized;
-        Vector3 right = Vector3.Cross(platform.up, forward);
-        //forward = Vector3.Cross(right, platform.up);
+        Vector3 forward = (followTarget.transform.position - transform.position).normalized;
+        Vector3 right = Vector3.Cross(Vector3.up, forward);
 
-        transform.rotation = Quaternion.LookRotation(forward, platform.up);
+        transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
     }
 }

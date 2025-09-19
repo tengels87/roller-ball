@@ -34,5 +34,10 @@ public class BallController : MonoBehaviour
 
         // Apply force relative to world
         rb.AddForce(force, ForceMode.Acceleration);
+
+        // respawn when falling down
+        if (this.transform.position.y < -2) {
+            this.transform.position = new Vector3(2, 2, 0);
+        }
     }
 }
