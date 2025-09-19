@@ -24,19 +24,4 @@ public class ApplicationManager : MonoBehaviour {
         // load menu scene
         SceneManager.Instance.loadMenuScene();
     }
-
-    public void QuitGame() {
-        if (isQuitting) {
-            return;
-        }
-
-        isQuitting = true;
-
-        Application.Quit();
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
-
-    }
 }

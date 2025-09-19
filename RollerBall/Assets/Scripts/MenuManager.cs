@@ -6,6 +6,8 @@ public class MenuManager : MonoBehaviour {
     [SerializeField] private GameObject canvasMainMenu;
     [SerializeField] private GameObject canvasLevelSelect;
 
+    private bool isQuitting = false;
+
     private void Awake() {
         setMainMenuVisibility(true);
         setLevelselectMenuVisibility(false);
@@ -35,5 +37,20 @@ public class MenuManager : MonoBehaviour {
 
     public void loadFirstLevel() {
         SceneManager.Instance.fromMenuToLevel(0);
+    }
+
+    public void quitGame() {
+        if (isQuitting) {
+            return;
+        }
+
+        isQuitting = true;
+
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+
     }
 }
